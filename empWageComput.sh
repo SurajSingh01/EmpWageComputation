@@ -16,29 +16,31 @@ totalWage=0
 totalWorkingHrs=0
 totalWorkingDays=0
 
+function getWorkHrs(){
+
+	local empCheck=$1
+	case $empCheck in
+		$PRESENT)
+			empHrs=8
+		;;
+		$PART_TIME)
+			empHrs=4
+		;;
+		$ABSENT)
+			empHrs=0
+		;;
+	esac
+	echo $empHrs
+}
+
 while [[ $totalWorkingHrs -lt 100 && $totalWorkingDays -lt 20 ]]
 do
 
 	isPresent=$(( RANDOM % 3 ))
 	((totalWOrkingDays++))
-
-		case $isPresent in
-			$PRESENT)
-				echo "Present"
-				dilyWage=$(( $WAGE_PER_HOURS * $WORKING_HOURS ))
-				totalWage=$(( $totalWage + $dailyWage ))
-				totalWorkingHrs=$(( $totalWorkingHrs + $WORKING_HOURS )
-				;;
-			$PART_TIME)
-				echo "Part time"
-				dailyWage=$(( $WAGE_PER_HOURS * $PART_TIME_HOURS ))
-				totalWage=$(( $totalWage + $dailyWage ))
-				totalWorkingHrs=$(( $totalWorkingHrs + $WORKING_HOURS )
-				;;
-			$ABSENT)
-				echo "Absent"
-				;;
-		esac
+	dilyWage=$(( $WAGE_PER_HOURS * $WORKING_HOURS ))
+	totalWage=$(( $totalWage + $dailyWage ))
+	totalWorkingHrs=$(( $totalWorkingHrs + $WORKING_HOURS )
 done
 
 echo $totalWage
