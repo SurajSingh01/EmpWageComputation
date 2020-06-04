@@ -16,6 +16,7 @@ totalWage=0
 totalWorkingHrs=0
 totalWorkingDays=0
 
+#Function for Working Hrs
 function getWorkHrs(){
 
 	local empCheck=$1
@@ -38,9 +39,19 @@ do
 
 	isPresent=$(( RANDOM % 3 ))
 	((totalWOrkingDays++))
-	dilyWage=$(( $WAGE_PER_HOURS * $WORKING_HOURS ))
-	totalWage=$(( $totalWage + $dailyWage ))
-	totalWorkingHrs=$(( $totalWorkingHrs + $WORKING_HOURS )
+	workingHrs=$( getWorkHrs $isPresent )
+   dailyWage[totalWorkingDays]=$(( $WAGE_PER_HOURS * $workingHrs ))
+	totalWage=$(( $totalWage + ($WAGE_PER_HOURS * $workingHrs) ))
+	totalDailyWage[$totalWorkingDays]=$totalWage
+   totalWorkingHrs=$(( $totalWorkingHrs + $workingHrs ))
+done
+
+for (( i=0; i<$totalWorkingDays; i++ ))
+do
+	echo ${dailyWage[$i]}" "${totalDailyWage[$i]}
 done
 
 echo $totalWage
+echo ${dailyWage[@]}
+
+echo ${totalDailyWage[@]}
