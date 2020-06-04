@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 echo "Welcome to Employee Wage Computation"
 
@@ -33,25 +33,20 @@ function getWorkHrs(){
 	esac
 	echo $empHrs
 }
-
+echo "Day No.      DailyWage      TotalWage"
 while [[ $totalWorkingHrs -lt 100 && $totalWorkingDays -lt 20 ]]
 do
 
 	isPresent=$(( RANDOM % 3 ))
 	((totalWOrkingDays++))
 	workingHrs=$( getWorkHrs $isPresent )
-   dailyWage[totalWorkingDays]=$(( $WAGE_PER_HOURS * $workingHrs ))
+   dailyWage["Day" $totalWorkingDays]=$(( $WAGE_PER_HOURS * $workingHrs ))
 	totalWage=$(( $totalWage + ($WAGE_PER_HOURS * $workingHrs) ))
-	totalDailyWage[$totalWorkingDays]=$totalWage
+	totalDailyWage["Day "$totalWorkingDays]=$totalWage
    totalWorkingHrs=$(( $totalWorkingHrs + $workingHrs ))
 done
 
-for (( i=0; i<$totalWorkingDays; i++ ))
+for (( i=1; i<=$totalWorkingDays; i++ ))
 do
-	echo ${dailyWage[$i]}" "${totalDailyWage[$i]}
+	echo " Day "$i"		"${dailyWage["Day "$i]}"		"${totalDailyWage["Day "$i]}
 done
-
-echo $totalWage
-echo ${dailyWage[@]}
-
-echo ${totalDailyWage[@]}
